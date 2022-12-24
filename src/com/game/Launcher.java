@@ -10,6 +10,7 @@ import java.awt.image.BufferStrategy;
 
 import javax.swing.JFrame;
 
+import com.states.EndGame;
 import com.states.GameState;
 import com.states.StartState;
 import com.states.State;
@@ -26,10 +27,10 @@ public class Launcher extends Canvas implements Runnable {
 	private Thread gameThread; // thread where the game is updated AND drawn (single thread game)
 	public JFrame frame;
 
-	
-	public State gameState;
-	public State startState;
-	
+	public static State playingState;
+	public static State menuState;
+	public static State endState;;
+
 	// ------------------
 	public Launcher() {
 
@@ -44,17 +45,18 @@ public class Launcher extends Canvas implements Runnable {
 
 		Dimension size = new Dimension(WIDTH, HEIGHT);
 		setPreferredSize(size);
-		
+
 		game = new Game();
-		
-		gameState = new GameState(game);
-		
-		startState = new StartState(game);
-		
-		State.setState(gameState);
-		
+
+		playingState = new GameState(game);
+
+		menuState = new StartState(game);
+
+		endState = new EndGame(game);
+
+		State.setState(menuState);
+
 		State.getState().setup();
-		
 
 		addKeyListener(new KeyListener() {
 			@Override
@@ -63,12 +65,12 @@ public class Launcher extends Canvas implements Runnable {
 
 			@Override
 			public void keyReleased(KeyEvent e) {
-				game.keyReleased(e);
+				State.getState().keyReleased(e);
 			}
 
 			@Override
 			public void keyPressed(KeyEvent e) {
-				game.keyPressed(e);
+				State.getState().keyPressed(e);
 			}
 		});
 
@@ -85,7 +87,7 @@ public class Launcher extends Canvas implements Runnable {
 		double delta = 0;
 		long now;
 		long lastTime = System.nanoTime();
-		
+
 		while (running) {
 			now = System.nanoTime();
 			delta += (now - lastTime) / timePerTick;
@@ -99,7 +101,6 @@ public class Launcher extends Canvas implements Runnable {
 		}
 
 		stop();
-
 	}
 
 	// ------------------

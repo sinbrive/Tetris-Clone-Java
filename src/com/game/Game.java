@@ -1,6 +1,5 @@
 package com.game;
 
-
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
@@ -10,43 +9,38 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import com.states.EndGame;
 import com.states.State;
 
 public class Game {
 
-	private int rotIndex = 0;
+	private int rotIndex;
 	private ArrayList<Point> lines;
-	private int score = 0;
+	private int score;
 	private int points_per_level = 100;
 	private int level = 1;
-	private boolean game_over = false;
 	private double chrono;
 	private int timeLevel = 1000;
-	public  Shape shape;
+	public Shape shape;
 	private Shape nextShape;
-	private EndGame endGame;
 
 	// ------------------
 	public Game() {
-		game_over = false;
-		chrono = System.currentTimeMillis();
-		lines = new ArrayList<Point>();
-		endGame = new EndGame(this);
 
 	}
 
 	// ------------------
 	public void setup() {
-//    rectMode(CENTER);
+		chrono = System.currentTimeMillis();
+		score = 0;
+		level = 1;
+		rotIndex = 0;
+		lines = new ArrayList<Point>();
 		shape = new Shape(10, 10);
 		nextShape = new Shape(Launcher.WIDTH - 70, 50);
 	}
 
 	// ------------------
 	public void update() {
-		if (game_over)
-			return;
 		makeStepDown();
 		if (!shape.canMoveDown(lines) || nextOnFloor()) {
 			shape.move(0, -20);
@@ -63,7 +57,6 @@ public class Game {
 		shape.draw(g);
 		drawLines(g);
 		displaySideBoard(g);
-//		displayGameOver(g);
 	}
 
 	// ------------------
@@ -132,7 +125,7 @@ public class Game {
 			}
 		}
 
-		// lines.removeIf(p -> p.y == row); // Java 8
+		// lines.removeIf(p -> p.y == row); // Java 8 not used
 
 		for (Point ln : lines) {
 			if (ln.y < row) {
@@ -145,7 +138,8 @@ public class Game {
 	void checkGameOver() {
 		for (Point ln : lines) {
 			if (ln.y < 60) {
-				State.setState(endGame);;
+				State.setState(Launcher.endState);
+				;
 				return;
 			}
 		}
@@ -167,7 +161,7 @@ public class Game {
 	}
 
 	// ------------------
-	public  void drawLines(Graphics2D g) {
+	public void drawLines(Graphics2D g) {
 		for (Point ln : lines) {
 			g.setColor(ln.c);
 			g.fillRect(ln.x - 10, ln.y - 10, 20, 20);
@@ -183,14 +177,6 @@ public class Game {
 		text(g, "Level " + level, Launcher.WIDTH - 80, Launcher.HEIGHT / 2);
 		text(g, "Score " + score, Launcher.WIDTH - 80, Launcher.HEIGHT / 2 + 50);
 	}
-
-//	// ------------------
-//	void displayGameOver(Graphics2D g) {
-//		if (game_over) {
-//			g.setColor(new Color(255, 100, 100));
-//			text(g, "Game Over", Launcher.WIDTH - 90, Launcher.HEIGHT / 2 + 150);
-//		}
-//	}
 
 	// ------------------
 	public void keyPressed(KeyEvent e) {

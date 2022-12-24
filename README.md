@@ -1,4 +1,3 @@
-#  Tetris-Clone-Java-Thread-State
+#  Tetris-Clone
 
-local : C:\Users\Eurientis\Documents\Eclipse\wk2\tetris-thread-state
-
+Inspired by : CodeNMore and TheCherno

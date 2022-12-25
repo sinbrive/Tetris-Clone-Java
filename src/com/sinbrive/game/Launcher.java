@@ -1,4 +1,4 @@
-package com.game;
+package com.sinbrive.game;
 
 import java.awt.Canvas;
 import java.awt.Dimension;
@@ -10,14 +10,14 @@ import java.awt.image.BufferStrategy;
 
 import javax.swing.JFrame;
 
-import com.states.EndGame;
-import com.states.GameState;
-import com.states.StartState;
-import com.states.State;
+import com.sinbrive.states.EndState;
+import com.sinbrive.states.GameState;
+import com.sinbrive.states.MenuState;
+import com.sinbrive.states.PauseState;
+import com.sinbrive.states.State;
 
 public class Launcher extends Canvas implements Runnable {
 
-//	private Timer timer;
 	public Game game;
 
 	public final static int WIDTH = 300;
@@ -30,6 +30,7 @@ public class Launcher extends Canvas implements Runnable {
 	public static State playingState;
 	public static State menuState;
 	public static State endState;;
+	public static State pauseState;;
 
 	// ------------------
 	public Launcher() {
@@ -47,13 +48,15 @@ public class Launcher extends Canvas implements Runnable {
 		setPreferredSize(size);
 
 		game = new Game();
+		
+		menuState = new MenuState();
+		
+		pauseState = new PauseState(game);
 
 		playingState = new GameState(game);
 
-		menuState = new StartState(game);
-
-		endState = new EndGame(game);
-
+		endState = new EndState();
+		
 		State.setState(menuState);
 
 		State.getState().setup();
@@ -65,12 +68,19 @@ public class Launcher extends Canvas implements Runnable {
 
 			@Override
 			public void keyReleased(KeyEvent e) {
-				State.getState().keyReleased(e);
+				if (State.getState() != null) 
+					State.getState().keyReleased(e);
 			}
 
 			@Override
 			public void keyPressed(KeyEvent e) {
-				State.getState().keyPressed(e);
+
+				if (e.getKeyCode() == KeyEvent.VK_Q) {
+					System.exit(0);
+				}
+				
+				if (State.getState() != null) 
+					State.getState().keyPressed(e);
 			}
 		});
 
@@ -94,7 +104,8 @@ public class Launcher extends Canvas implements Runnable {
 			lastTime = now;
 
 			if (delta >= 1) {
-				State.getState().update();
+				if (State.getState() != null) 
+					State.getState().update();
 				this.draw();
 				delta--;
 			}
@@ -114,7 +125,8 @@ public class Launcher extends Canvas implements Runnable {
 
 		Graphics2D g = (Graphics2D) buffer.getDrawGraphics();
 
-		State.getState().draw(g);
+		if (State.getState() != null) 
+			State.getState().draw(g);
 
 		g.dispose();
 		buffer.show();
@@ -140,7 +152,6 @@ public class Launcher extends Canvas implements Runnable {
 
 	// ------------------
 	public static void main(String[] args) {
-
 		Launcher tetris = new Launcher();
 		tetris.frame.setResizable(false);
 		tetris.frame.setTitle("Tetris Game");

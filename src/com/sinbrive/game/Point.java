@@ -1,4 +1,4 @@
-package com.game;
+package com.sinbrive.game;
 
 import java.awt.Color;
 

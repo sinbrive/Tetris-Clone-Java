@@ -1,31 +1,30 @@
-package com.game;
+package com.sinbrive.game;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
+
 import java.awt.Font;
 import java.awt.Graphics2D;
-import java.awt.Stroke;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import com.states.State;
+import com.sinbrive.states.State;
 
 public class Game {
 
 	private int rotIndex;
 	private ArrayList<Point> lines;
-	private int score;
+	public static int score;
 	private int points_per_level = 100;
-	private int level = 1;
+	public static int level = 1;
 	private double chrono;
 	private int timeLevel = 1000;
 	public Shape shape;
 	private Shape nextShape;
+	private Display display;
 
 	// ------------------
 	public Game() {
-
+		setup();
 	}
 
 	// ------------------
@@ -35,6 +34,7 @@ public class Game {
 		level = 1;
 		rotIndex = 0;
 		lines = new ArrayList<Point>();
+		display = new Display();
 		shape = new Shape(10, 10);
 		nextShape = new Shape(Launcher.WIDTH - 70, 50);
 	}
@@ -53,10 +53,11 @@ public class Game {
 
 	// ------------------
 	public void draw(Graphics2D g) {
-		displayGrid(g);
+		display.renderBoard(g);
 		shape.draw(g);
 		drawLines(g);
-		displaySideBoard(g);
+		display.renderSide(g, level, score);
+		nextShape.draw(g);
 	}
 
 	// ------------------
@@ -139,26 +140,12 @@ public class Game {
 		for (Point ln : lines) {
 			if (ln.y < 60) {
 				State.setState(Launcher.endState);
-				;
+				State.getState().setup();
 				return;
 			}
 		}
 	}
 
-	// ------------------
-	public void displayGrid(Graphics2D g) {
-		g.setColor(Color.black);
-		g.fillRect(0, 0, 200, Launcher.HEIGHT);
-		g.setColor(new Color(50, 50, 50));
-		Stroke stroke1 = new BasicStroke(0.25f);
-		g.setStroke(stroke1);
-
-		for (int y = 10; y < Launcher.HEIGHT; y += 20) {
-			for (int x = 10; x < Launcher.WIDTH - 100; x += 20) {
-				g.drawRect(x - 10, y - 10, 20, 20);
-			}
-		}
-	}
 
 	// ------------------
 	public void drawLines(Graphics2D g) {
@@ -168,15 +155,6 @@ public class Game {
 		}
 	}
 
-	// ------------------
-	public void displaySideBoard(Graphics2D g) {
-		g.setColor(new Color(34, 34, 34));
-		g.fillRect(Launcher.WIDTH - 50 - 50, 0, 100, Launcher.HEIGHT);
-		nextShape.draw(g);
-		g.setColor(new Color(130, 130, 130));
-		text(g, "Level " + level, Launcher.WIDTH - 80, Launcher.HEIGHT / 2);
-		text(g, "Score " + score, Launcher.WIDTH - 80, Launcher.HEIGHT / 2 + 50);
-	}
 
 	// ------------------
 	public void keyPressed(KeyEvent e) {
@@ -185,6 +163,13 @@ public class Game {
 
 		float a = 0;
 		float b = 0;
+		
+		if (key == KeyEvent.VK_P) {
+			State.setState(Launcher.pauseState);
+			State.getState().setup();
+		}
+		
+		
 		if (key == KeyEvent.VK_RIGHT) {
 			a = shape.getXoffset();
 			if (a < Launcher.WIDTH - 100 - 20 * shape.getNbX()) {
@@ -217,13 +202,6 @@ public class Game {
 				shape.rotate(rotIndex);
 			}
 		}
-	}
-
-	public void text(Graphics2D g, String txt, int x, int y) {
-		int fontSize = 15;
-		Font f = new Font("Comic Sans MS", Font.CENTER_BASELINE, fontSize);
-		g.setFont(f);
-		g.drawString(txt, x, y);
 	}
 
 	public void keyReleased(KeyEvent e) {

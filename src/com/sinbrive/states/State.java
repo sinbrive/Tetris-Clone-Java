@@ -1,4 +1,4 @@
-package com.states;
+package com.sinbrive.states;
 
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;

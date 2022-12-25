@@ -1,24 +1,26 @@
-package com.states;
+package com.sinbrive.states;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 
-import com.game.Game;
-import com.game.Launcher;
+import com.sinbrive.game.Display;
+import com.sinbrive.game.Game;
+import com.sinbrive.game.Launcher;
 
-public class StartState extends State {
+public class PauseState extends State {
 
+	private Display display;
 	private Game game;
 
-	public StartState(Game game) {
+	public PauseState(Game game) {
 		this.game = game;
-
+		display = new Display();
 	}
 
 	@Override
 	public void setup() {
-		game.setup();
+		
 	}
 
 	@Override
@@ -29,9 +31,8 @@ public class StartState extends State {
 	@Override
 	public void draw(Graphics2D g) {
 		game.draw(g);
-		g.setColor(new Color(255, 100, 100));
-		game.text(g, "Space to start", Launcher.WIDTH - 250, Launcher.HEIGHT / 2 + 150);
-
+		g.setColor(new Color(100, 100, 100));
+		display.text(g, "Enter to resume", Launcher.WIDTH - 250, Launcher.HEIGHT / 2 + 150, 15);
 	}
 
 	@Override
@@ -44,7 +45,7 @@ public class StartState extends State {
 	public void keyReleased(KeyEvent e) {
 		int key = e.getKeyCode();
 
-		if (key == KeyEvent.VK_SPACE) {
+		if (key == KeyEvent.VK_ENTER) {
 			State.setState(Launcher.playingState);
 		}
 	}

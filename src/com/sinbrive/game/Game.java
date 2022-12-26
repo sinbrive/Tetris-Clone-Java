@@ -163,6 +163,17 @@ public class Game {
 		float a = 0;
 		float b = 0;
 		
+		  
+	    if (key==KeyEvent.VK_SPACE) {
+	      do {
+	        shape.move(0, 20);
+	      } while (shape.canMoveDown(lines) && !nextOnFloor());
+	      shape.move(0, -20);
+	      return;
+	    }
+	    
+		
+		
 		if (key == KeyEvent.VK_P) {
 			State.setState(Launcher.pauseState);
 			State.getState().setup();

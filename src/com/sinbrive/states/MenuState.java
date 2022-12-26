@@ -32,11 +32,12 @@ public class MenuState extends State {
 		display.renderSide(g, Game.level, Game.score);
 		g.setColor(new Color(255, 100, 100));
 			  
-		display.text(g, "left and right arrow for horizontal movement.", 30, 100, 12);
-		display.text(g, "down arrow key to move down more quickly,", 30, 120, 12);
-		display.text(g, "up arrow for  rotations.", 30, 140, 12);
-		display.text(g, "Pressing 'q' quits the game.", 30, 160, 12);
-		display.text(g, "Pressing 'p' pauses the game.", 30, 180, 12);
+		display.text(g, "LEFT and RIGHT for horizontal movement.", 30, 100, 12);
+		display.text(g, "DOWN key to move down quickly,", 30, 120, 12);
+		display.text(g, "UP arrow for  rotations.", 30, 140, 12);
+		display.text(g, "SPACE for dropping down.", 30, 160, 12);
+		display.text(g, "Pressing 'q' quits the game.", 30, 180, 12);
+		display.text(g, "Pressing 'p' pauses the game.", 30, 200, 12);
 		display.text(g, "Enter to start the game", 30, 250, 12);
 	}
 

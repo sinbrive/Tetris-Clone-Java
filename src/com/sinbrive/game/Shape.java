@@ -1,7 +1,7 @@
 package com.sinbrive.game;
 
 import java.awt.Color;
-import java.awt.Graphics2D;
+import java.awt.Graphics;
 import java.util.ArrayList;
 
 public class Shape extends Tetros {
@@ -69,7 +69,7 @@ public class Shape extends Tetros {
 	}
 
 	// ------------------
-	public void draw(Graphics2D g) {
+	public void draw(Graphics g) {
 		g.setColor(c);
 		for (int i = 0; i < p.length; i++) {
 			Point s = p[i];

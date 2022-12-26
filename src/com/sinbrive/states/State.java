@@ -1,6 +1,6 @@
 package com.sinbrive.states;
 
-import java.awt.Graphics2D;
+import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 
 public abstract class State {
@@ -20,7 +20,7 @@ public abstract class State {
 
 	public abstract void update();
 
-	public abstract void draw(Graphics2D g);
+	public abstract void draw(Graphics g);
 
 	public abstract void keyReleased(KeyEvent e);
 

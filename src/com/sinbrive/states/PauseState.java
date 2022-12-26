@@ -1,7 +1,7 @@
 package com.sinbrive.states;
 
 import java.awt.Color;
-import java.awt.Graphics2D;
+import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 
 import com.sinbrive.game.Display;
@@ -29,7 +29,7 @@ public class PauseState extends State {
 	}
 
 	@Override
-	public void draw(Graphics2D g) {
+	public void draw(Graphics g) {
 		game.draw(g);
 		g.setColor(new Color(100, 100, 100));
 		display.text(g, "Enter to resume", Launcher.WIDTH - 250, Launcher.HEIGHT / 2 + 150, 15);

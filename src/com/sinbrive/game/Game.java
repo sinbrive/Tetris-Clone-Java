@@ -1,8 +1,7 @@
 package com.sinbrive.game;
 
 
-import java.awt.Font;
-import java.awt.Graphics2D;
+import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -52,7 +51,7 @@ public class Game {
 	}
 
 	// ------------------
-	public void draw(Graphics2D g) {
+	public void draw(Graphics g) {
 		display.renderBoard(g);
 		shape.draw(g);
 		drawLines(g);
@@ -148,7 +147,7 @@ public class Game {
 
 
 	// ------------------
-	public void drawLines(Graphics2D g) {
+	public void drawLines(Graphics g) {
 		for (Point ln : lines) {
 			g.setColor(ln.c);
 			g.fillRect(ln.x - 10, ln.y - 10, 20, 20);

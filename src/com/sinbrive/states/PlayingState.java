@@ -1,21 +1,16 @@
 package com.sinbrive.states;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
+import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 
-import com.sinbrive.game.Display;
 import com.sinbrive.game.Game;
-import com.sinbrive.game.Launcher;
 
-public class GameState extends State {
+public class PlayingState extends State {
 
 	private Game game;
-	private Display display;
 
-	public GameState(Game game) {
+	public PlayingState(Game game) {
 		this.game = game;
-		display = new Display();
 	}
 
 	@Override
@@ -30,10 +25,8 @@ public class GameState extends State {
 	}
 
 	@Override
-	public void draw(Graphics2D g) {
+	public void draw(Graphics g) {
 		game.draw(g);
-//		g.setColor(new Color(100, 250, 100));
-//		display.text(g,"SPACE to pause", Launcher.WIDTH - 90, Launcher.HEIGHT-30, 10);
 	}
 
 	@Override

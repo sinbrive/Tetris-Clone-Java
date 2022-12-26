@@ -1,7 +1,7 @@
 package com.sinbrive.states;
 
 import java.awt.Color;
-import java.awt.Graphics2D;
+import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 
 import com.sinbrive.game.Display;
@@ -27,7 +27,7 @@ public class EndState extends State {
 	}
 
 	@Override
-	public void draw(Graphics2D g) {
+	public void draw(Graphics g) {
 		display.renderBoard(g);
 		display.renderSide(g, Game.level, Game.score);
 		g.setColor(new Color(255, 100, 100));

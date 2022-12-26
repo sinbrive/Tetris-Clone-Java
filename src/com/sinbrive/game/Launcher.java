@@ -2,7 +2,7 @@ package com.sinbrive.game;
 
 import java.awt.Canvas;
 import java.awt.Dimension;
-import java.awt.Graphics2D;
+import java.awt.Graphics;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -11,7 +11,7 @@ import java.awt.image.BufferStrategy;
 import javax.swing.JFrame;
 
 import com.sinbrive.states.EndState;
-import com.sinbrive.states.GameState;
+import com.sinbrive.states.PlayingState;
 import com.sinbrive.states.MenuState;
 import com.sinbrive.states.PauseState;
 import com.sinbrive.states.State;
@@ -53,7 +53,7 @@ public class Launcher extends Canvas implements Runnable {
 		
 		pauseState = new PauseState(game);
 
-		playingState = new GameState(game);
+		playingState = new PlayingState(game);
 
 		endState = new EndState();
 		
@@ -123,7 +123,7 @@ public class Launcher extends Canvas implements Runnable {
 			return;
 		}
 
-		Graphics2D g = (Graphics2D) buffer.getDrawGraphics();
+		Graphics g = buffer.getDrawGraphics();
 
 		if (State.getState() != null) 
 			State.getState().draw(g);
